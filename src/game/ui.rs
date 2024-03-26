@@ -287,8 +287,8 @@ commands
 fn dice_number_check_system(
     q_dices: Query<(&Transform, &Children), With<Dice>>,
     q_dice_num: Query<(&DiceNum, &GlobalTransform)>,
-    mut q_num_text: Query<&mut Text, With<UiDiceNum>>
-    
+    mut q_num_text: Query<&mut Text, With<UiDiceNum>>,
+    q_dice_model: Query<(Entity, &Children), With<DiceModel>>,
 ) {
     let mut total_num = 0;
     let mut dice_count = 0;
@@ -297,50 +297,56 @@ fn dice_number_check_system(
         dice_count += 1;
         let mut highest_num: i32 = 0;
         let mut before_y_val = -10000.;
-        for &nums in child.iter() {
-            if let Ok((num, tr)) = q_dice_num.get(nums) {
-                if num.dice_num_type == DiceNumType::One {
-                    let y = tr.translation().y;
-                    if y > before_y_val {
-                        before_y_val = y;
-                        highest_num = 1;
+        for &num_model in child.iter() {
+            if let Ok((_num_model_entity, num_model_chidren)) = q_dice_model.get(num_model) {
+                for &nums in num_model_chidren.iter() {
+                    if let Ok((num, tr)) = q_dice_num.get(nums) {
+                        // print!("d: {:?}", num);
+                        if num.dice_num_type == DiceNumType::One {
+                            let y = tr.translation().y;
+                            if y > before_y_val {
+                                before_y_val = y;
+                                highest_num = 1;
+                            }
+                        }
+                        if num.dice_num_type == DiceNumType::Two {
+                            let y = tr.translation().y;
+                            if y > before_y_val {
+                                before_y_val = y;
+                                highest_num = 2;
+                            }
+                        }
+                        if num.dice_num_type == DiceNumType::Three {
+                            let y = tr.translation().y;
+                            if y > before_y_val {
+                                before_y_val = y;
+                                highest_num = 3;
+                            }
+                        }
+                        if num.dice_num_type == DiceNumType::Four {
+                            let y = tr.translation().y;
+                            if y > before_y_val {
+                                before_y_val = y;
+                                highest_num = 4;
+                            }
+                        }
+                        if num.dice_num_type == DiceNumType::Five {
+                            let y = tr.translation().y;
+                            if y > before_y_val {
+                                before_y_val = y;
+                                highest_num = 5;
+                            }
+                        }
+                        if num.dice_num_type == DiceNumType::Six { 
+                            let y = tr.translation().y;
+                            if y > before_y_val {
+                                before_y_val = y;
+                                highest_num = 6;
+                            }
+                        }
                     }
                 }
-                if num.dice_num_type == DiceNumType::Two {
-                    let y = tr.translation().y;
-                    if y > before_y_val {
-                        before_y_val = y;
-                        highest_num = 2;
-                    }
-                }
-                if num.dice_num_type == DiceNumType::Three {
-                    let y = tr.translation().y;
-                    if y > before_y_val {
-                        before_y_val = y;
-                        highest_num = 3;
-                    }
-                }
-                if num.dice_num_type == DiceNumType::Four {
-                    let y = tr.translation().y;
-                    if y > before_y_val {
-                        before_y_val = y;
-                        highest_num = 4;
-                    }
-                }
-                if num.dice_num_type == DiceNumType::Five {
-                    let y = tr.translation().y;
-                    if y > before_y_val {
-                        before_y_val = y;
-                        highest_num = 5;
-                    }
-                }
-                if num.dice_num_type == DiceNumType::Six { 
-                    let y = tr.translation().y;
-                    if y > before_y_val {
-                        before_y_val = y;
-                        highest_num = 6;
-                    }
-                }
+                
             }
         }
         total_num += highest_num;
@@ -355,8 +361,7 @@ fn button_system(
     mut commands: Commands,
     mut ext_impulses: Query<&mut ExternalImpulse>,
     despawn_dices: Query<Entity, With<Dice>>,
-    mut dice_material_assets: ResMut<DiceMaterialAssets>,
-    mut dice_mesh_assets: ResMut<DiceMeshAssets>,
+    mut dice_assets: ResMut<DiceAssets>,
     mut text_query: Query<&mut Text>,
     mut r_game_config: ResMut<GameConfig>,
     q_dices: Query<&Dice>
@@ -368,7 +373,7 @@ fn button_system(
                     match *interaction {
                         Interaction::Pressed => {
                             bg.0 = Color::YELLOW;
-                            gen_dice(&mut commands, &mut dice_material_assets, &mut dice_mesh_assets)
+                            gen_dice(&mut commands, &mut dice_assets)
                         }
                         _ => {
                             bg.0 = Color::WHITE;

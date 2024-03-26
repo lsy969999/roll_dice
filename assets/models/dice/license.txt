@@ -1,0 +1,11 @@
+Model Information:
+* title:	Dice - Free
+* source:	https://sketchfab.com/3d-models/dice-free-8d90377e764d487a8d9e5b2cba702974
+* author:	LW (https://sketchfab.com/kelly7y001)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Dice - Free" (https://sketchfab.com/3d-models/dice-free-8d90377e764d487a8d9e5b2cba702974) by LW (https://sketchfab.com/kelly7y001) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

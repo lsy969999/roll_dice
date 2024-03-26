@@ -40,6 +40,10 @@ pub struct DiceNum {
     pub dice_num_type: DiceNumType
 }
 
+/// 주사위 모델
+#[derive(Component, Debug)]
+pub struct DiceModel;
+
 pub struct DicePlugin;
 
 impl Plugin for DicePlugin {
@@ -56,10 +60,9 @@ impl Plugin for DicePlugin {
 /// Startup 스케쥴시점에 주사위 하나를 추가한다.
 fn setup_dice(
     mut commands: Commands,
-    mut dice_material_assets: ResMut<DiceMaterialAssets>,
-    mut dice_mesh_assets: ResMut<DiceMeshAssets>,
+    mut dice_assets: ResMut<DiceAssets>,
 ){
-    gen_dice(&mut commands, &mut dice_material_assets, &mut dice_mesh_assets);
+    gen_dice(&mut commands, &mut dice_assets);
 }
 
 /// 주사위를 생성한다.
@@ -67,8 +70,7 @@ fn setup_dice(
 /// 주사위 생성시 생성 Pos 와 Rot 값은 랜덤이다.
 pub fn gen_dice(
     commands: &mut Commands,
-    dice_material_assets: &mut ResMut<DiceMaterialAssets>,
-    dice_mesh_assets: &mut ResMut<DiceMeshAssets>,
+    dice_assets: &mut ResMut<DiceAssets>,
 ) {
     let mut rng = rand::thread_rng();
     // 주사위의 생성 포지션 위치 값
@@ -81,7 +83,7 @@ pub fn gen_dice(
     let rand_dice_rot_z = rng.gen_range(0.0..=2. * PI) as f32;
     
     commands
-        .spawn((RigidBody::Dynamic, Dice, SpatialBundle::default()))
+        .spawn((RigidBody::Dynamic, Dice, SpatialBundle::default() ))
         .insert(Collider::cuboid(2., 2., 2.))
         .insert(ActiveEvents::COLLISION_EVENTS)
         .insert(GravityScale(2.0))
@@ -95,76 +97,55 @@ pub fn gen_dice(
         .insert(ExternalImpulse::default())
         .with_children(|parent| {
             parent
-                .spawn((PbrBundle {
-                    mesh: dice_mesh_assets.dice_mesh.clone(),
-                    material: dice_material_assets.dice1_material.clone(),
+                .spawn(SceneBundle {
+                    scene: dice_assets.dice_model.clone(),
                     transform: Transform {
-                        translation: Vec3::new(0., -2., 0.),
-                        rotation: Quat::from_euler(EulerRot::XYZ, 0., 0., PI),
-                        scale: Vec3::new(2., 2., 2.)
+                        scale: Vec3::new(180., 180., 180.),
+                        
+                        ..default()
                     },
                     ..default()
-                }, DiceNum{ dice_num_type: DiceNumType::One } ));
-    
-            parent
-                .spawn((PbrBundle {
-                    mesh: dice_mesh_assets.dice_mesh.clone(),
-                    material: dice_material_assets.dice6_material.clone(),
-                    transform: Transform {
-                        translation: Vec3::new(0., 2., 0.),
-                        rotation: Quat::from_euler(EulerRot::XYZ, 0., 0., 0.),
-                        scale: Vec3::new(2., 2., 2.)
-                    },
-                    ..default()
-                }, DiceNum{ dice_num_type: DiceNumType::Six } ));
+                })
+                .insert(DiceModel)
+                .with_children(|parent| {
+                    parent
+                        .spawn((SpatialBundle::from_transform(Transform {
+                            translation: Vec3::new(0., -2., 0.),
+                            rotation: Quat::from_euler(EulerRot::XYZ, 0., 0., PI),
+                            scale: Vec3::new(2., 2., 2.)
+                        }), DiceNum{ dice_num_type: DiceNumType::One } ));
+                    parent
+                        .spawn((SpatialBundle::from_transform(Transform {
+                            translation: Vec3::new(0., 2., 0.),
+                            rotation: Quat::from_euler(EulerRot::XYZ, 0., 0., 0.),
+                            scale: Vec3::new(2., 2., 2.)
+                        }), DiceNum{ dice_num_type: DiceNumType::Six } ));
+                    parent
+                        .spawn((SpatialBundle::from(Transform {
+                            translation: Vec3::new(-2., 0., 0.),
+                            rotation: Quat::from_euler(EulerRot::XYZ, 0., 0., PI / 2.),
+                            scale: Vec3::new(2., 2., 2.)
+                        }), DiceNum{ dice_num_type: DiceNumType::Three } ));
+                    parent
+                        .spawn((SpatialBundle::from_transform(Transform {
+                            translation: Vec3::new(2., 0., 0.),
+                            rotation: Quat::from_euler(EulerRot::XYZ, 0., 0., -PI / 2.),
+                            scale: Vec3::new(2., 2., 2.)
+                        }), DiceNum{ dice_num_type: DiceNumType::Four } ));
 
-            parent
-                .spawn((PbrBundle {
-                    mesh: dice_mesh_assets.dice_mesh.clone(),
-                    material: dice_material_assets.dice3_material.clone(),
-                    transform: Transform {
-                        translation: Vec3::new(2., 0., 0.),
-                        rotation: Quat::from_euler(EulerRot::XYZ, 0., 0., -PI / 2.),
-                        scale: Vec3::new(2., 2., 2.)
-                    },
-                    ..default()
-                }, DiceNum{ dice_num_type: DiceNumType::Three } ));
-
-            parent
-                .spawn((PbrBundle {
-                    mesh: dice_mesh_assets.dice_mesh.clone(),
-                    material: dice_material_assets.dice4_material.clone(),
-                    transform: Transform {
-                        translation: Vec3::new(-2., 0., 0.),
-                        rotation: Quat::from_euler(EulerRot::XYZ, 0., 0., PI / 2.),
-                        scale: Vec3::new(2., 2., 2.)
-                    },
-                    ..default()
-                }, DiceNum{ dice_num_type: DiceNumType::Four } ));
-
-            parent
-                .spawn((PbrBundle {
-                    mesh: dice_mesh_assets.dice_mesh.clone(),
-                    material: dice_material_assets.dice5_material.clone(),
-                    transform: Transform {
-                        translation: Vec3::new(0., 0., 2.),
-                        rotation: Quat::from_euler(EulerRot::XYZ, PI / 2., 0., 0.),
-                        scale: Vec3::new(2., 2., 2.)
-                    },
-                    ..default()
-                }, DiceNum{ dice_num_type: DiceNumType::Five } ));
-
-            parent
-                .spawn((PbrBundle {
-                    mesh: dice_mesh_assets.dice_mesh.clone(),
-                    material: dice_material_assets.dice2_material.clone(),
-                    transform: Transform {
-                        translation: Vec3::new(0., 0., -2.),
-                        rotation: Quat::from_euler(EulerRot::XYZ, -PI / 2., 0., 0.),
-                        scale: Vec3::new(2., 2., 2.)
-                    },
-                    ..default()
-                }, DiceNum{ dice_num_type: DiceNumType::Two } ));
+                    parent
+                        .spawn((SpatialBundle::from_transform(Transform {
+                            translation: Vec3::new(0., 0., -2.),
+                            rotation: Quat::from_euler(EulerRot::XYZ, -PI / 2., 0., 0.),
+                            scale: Vec3::new(2., 2., 2.)
+                        }), DiceNum{ dice_num_type: DiceNumType::Five } ));
+                    parent
+                        .spawn((SpatialBundle::from_transform(Transform {
+                            translation: Vec3::new(0., 0., 2.),
+                            rotation: Quat::from_euler(EulerRot::XYZ, PI / 2., 0., 0.),
+                            scale: Vec3::new(2., 2., 2.)
+                        }), DiceNum{ dice_num_type: DiceNumType::Two } ));
+                    });
         });
 }
 
