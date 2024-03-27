@@ -74,9 +74,9 @@ class ViewController: UIViewController {
 //        }
         if let acc = acc {
 //            print("acc acc.x: \(Float(acc.x)),  acc.y: \(Float(acc.y)) acc.z:\(Float(acc.z))")
-            if abs(acc.x) > 1.5
-            || abs(acc.y) > 1.5
-            || abs(acc.z) > 1.5 {
+            if abs(acc.x) > 1.3
+            || abs(acc.y) > 1.3
+            || abs(acc.z) > 1.3 {
                 device_accelerometer(bevy, Float(acc.x), Float(acc.y), Float(acc.z))
             }
         }

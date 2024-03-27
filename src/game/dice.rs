@@ -265,9 +265,9 @@ fn accelerometer_detect_system(
 ) {
     if r_game_config.motion {
         for a in acc.read() {
-            if a.x.abs() > 1.5
-            || a.y.abs() > 1.5
-            || a.z.abs() > 1.5 {
+            if a.x.abs() > 1.3
+            || a.y.abs() > 1.3
+            || a.z.abs() > 1.3 {
                 // info!("!accelerometer_detect_system, {:?}", a);
                 for ext_impulse in ext_impulses.iter_mut() {
                     impulse_dice_accelerometer(ext_impulse, a.x * 300., a.y * 300., a.z * 300.)
