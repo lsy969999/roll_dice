@@ -10,16 +10,22 @@ mod game;
 
 pub fn create_roll_dice_app() -> App {
     let mut bevy_app = App::new();
+    
+    #[cfg(debug_assertions)]
     let mut default_plugins = DefaultPlugins
-        // .set(LogPlugin{
-        //     filter: "info,wgpu_core=warn,wgpu_hal=warn,roll_dice=debug".into(),
-        //     update_subscriber: None,
-        //     level: bevy::log::Level::DEBUG
-        // })
+        .set(LogPlugin{
+            filter: "info,wgpu_core=warn,wgpu_hal=warn,roll_dice=debug".into(),
+            update_subscriber: None,
+            level: bevy::log::Level::DEBUG
+        })
+        .build();
+
+    /// release 시점에는 Log, Diagnostics 플러그인을 해제, 메모리증가율때문
+    #[cfg(not(debug_assertions))]
+    let mut default_plugins = DefaultPlugins
         .build()
         .disable::<LogPlugin>()
-        .disable::<DiagnosticsPlugin>()
-        ;
+        .disable::<DiagnosticsPlugin>();
 
     #[cfg(any(target_os = "android", target_os = "ios"))]
     {

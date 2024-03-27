@@ -32,6 +32,8 @@ opt-level = 3
 
 [profile.release]
 # size optimize
-opt-level = 'z'
+opt-level = 3
+panic = 'abort'     # Abort on panic
+strip = true  
 # Add this to your Cargo.toml rapier
 codegen-units = 1
