@@ -84,7 +84,12 @@ commands
                             style: Style {
                                 width: Val::Percent(30.0),
                                 height: Val::Percent(10.0),
-                                border: UiRect::all(Val::Px(1.0)),
+                                border: UiRect {
+                                    top: Val::Px(2.),
+                                    left: Val::Px(2.),
+                                    right: Val::Px(2.),
+                                    ..default()
+                                },
                                 // // horizontally center child text
                                 justify_content: JustifyContent::Center,
                                 // // vertically center child text
@@ -120,7 +125,7 @@ commands
                             style: Style {
                                 width: Val::Percent(30.0),
                                 height: Val::Percent(10.0),
-                                border: UiRect::all(Val::Px(1.0)),
+                                border: UiRect::all(Val::Px(2.0)),
                                 // // horizontally center child text
                                 justify_content: JustifyContent::Center,
                                 // // vertically center child text
@@ -193,7 +198,7 @@ commands
                         style: Style {
                             width: Val::Percent(30.0),
                             height: Val::Percent(10.0),
-                            border: UiRect::all(Val::Px(5.0)),
+                            border: UiRect::all(Val::Px(3.0)),
                             // horizontally center child text
                             justify_content: JustifyContent::Center,
                             // vertically center child text
@@ -220,7 +225,11 @@ commands
                         style: Style {
                             width: Val::Percent(30.0),
                             height: Val::Percent(10.0),
-                            border: UiRect::all(Val::Px(5.0)),
+                            border: UiRect {
+                                top: Val::Px(3.),
+                                bottom: Val::Px(3.),
+                                ..default()
+                            },
                             // horizontally center child text
                             justify_content: JustifyContent::Center,
                             // vertically center child text
@@ -248,7 +257,7 @@ commands
                         style: Style {
                             width: Val::Percent(30.0),
                             height: Val::Percent(10.0),
-                            border: UiRect::all(Val::Px(5.0)),
+                            border: UiRect::all(Val::Px(3.0)),
                             // horizontally center child text
                             justify_content: JustifyContent::Center,
                             // vertically center child text
@@ -412,25 +421,37 @@ fn button_system(
             }
             GameButtonType::Mute => {
                 let mut text = text_query.get_mut(children[0]).unwrap();
-                if *interaction == Interaction::Pressed {
-                    if r_game_config.mute {
-                        r_game_config.mute = false;
-                        text.sections[1].value = "X".to_string();
-                    } else {
-                        r_game_config.mute = true;
-                        text.sections[1].value = "O".to_string();
+                match *interaction {
+                    Interaction::Pressed => {
+                        bg.0 = Color::GREEN;
+                        if r_game_config.mute {
+                            r_game_config.mute = false;
+                            text.sections[1].value = "X".to_string();
+                        } else {
+                            r_game_config.mute = true;
+                            text.sections[1].value = "O".to_string();
+                        }
+                    }
+                    _ => {
+                        bg.0 = Color::YELLOW_GREEN;
                     }
                 }
             }
             GameButtonType::Motion => {
                 let mut text = text_query.get_mut(children[0]).unwrap();
-                if *interaction == Interaction::Pressed {
-                    if r_game_config.motion {
-                        r_game_config.motion = false;
-                        text.sections[1].value = "X".to_string();
-                    } else {
-                        r_game_config.motion = true;
-                        text.sections[1].value = "O".to_string();
+                match *interaction {
+                    Interaction::Pressed => {
+                        bg.0 = Color::TOMATO;
+                        if r_game_config.motion {
+                            r_game_config.motion = false;
+                            text.sections[1].value = "X".to_string();
+                        } else {
+                            r_game_config.motion = true;
+                            text.sections[1].value = "O".to_string();
+                        }
+                    }
+                    _ => {
+                        bg.0 = Color::PINK;
                     }
                 }
             }
