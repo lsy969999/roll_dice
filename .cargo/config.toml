@@ -1,2 +1,22 @@
+# ios target
 # [build]
 # target = "aarch64-apple-ios"
+
+# android target
+# aarch64
+[build]
+target = "aarch64-linux-android"
+
+#
+# [build]
+# target = "armv7-linux-androideabi"
+
+[target.aarch64-linux-android]
+# ar = "/Users/syl/Library/Android/sdk/ndk/25.2.9519653/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-ar"
+linker = "/Users/syl/Library/Android/sdk/ndk/25.2.9519653/toolchains/llvm/prebuilt/darwin-x86_64/bin/aarch64-linux-android21-clang"
+rustflags = ["-C", "link-arg=-fuse-ld=lld"]
+
+[target.armv7-linux-androideabi]
+# ar = "/Users/syl/Library/Android/sdk/ndk/25.2.9519653/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-ar"
+linker = "/Users/syl/Library/Android/sdk/ndk/25.2.9519653/toolchains/llvm/prebuilt/darwin-x86_64/bin/armv7a-linux-androideabi21-clang"
+rustflags = ["-C", "link-arg=-fuse-ld=lld"]
