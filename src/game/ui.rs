@@ -423,17 +423,22 @@ fn button_system(
                 let mut text = text_query.get_mut(children[0]).unwrap();
                 match *interaction {
                     Interaction::Pressed => {
-                        bg.0 = Color::GREEN;
                         if r_game_config.mute {
+                            bg.0 = Color::GREEN;
                             r_game_config.mute = false;
                             text.sections[1].value = "X".to_string();
                         } else {
+                            bg.0 = Color::YELLOW_GREEN;
                             r_game_config.mute = true;
                             text.sections[1].value = "O".to_string();
                         }
                     }
                     _ => {
-                        bg.0 = Color::YELLOW_GREEN;
+                        if r_game_config.mute {
+                            bg.0 = Color::GREEN;
+                        } else {
+                            bg.0 = Color::YELLOW_GREEN;
+                        }
                     }
                 }
             }
@@ -441,17 +446,22 @@ fn button_system(
                 let mut text = text_query.get_mut(children[0]).unwrap();
                 match *interaction {
                     Interaction::Pressed => {
-                        bg.0 = Color::TOMATO;
                         if r_game_config.motion {
+                            bg.0 = Color::PINK;
                             r_game_config.motion = false;
                             text.sections[1].value = "X".to_string();
                         } else {
+                            bg.0 = Color::TOMATO;
                             r_game_config.motion = true;
                             text.sections[1].value = "O".to_string();
                         }
                     }
                     _ => {
-                        bg.0 = Color::PINK;
+                        if r_game_config.motion {
+                            bg.0 = Color::PINK;
+                        } else {
+                            bg.0 = Color::TOMATO;
+                        }
                     }
                 }
             }
