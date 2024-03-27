@@ -74,8 +74,8 @@ pub fn gen_dice(
 ) {
     let mut rng = rand::thread_rng();
     // 주사위의 생성 포지션 위치 값
-    let rand_dice_x = rng.gen_range(-10.0..=10.0) as f32;
-    let rand_dice_z = rng.gen_range(-10.0..=10.0) as f32;
+    let rand_dice_x = rng.gen_range(-5.0..=5.0) as f32;
+    let rand_dice_z = rng.gen_range(-5.0..=5.0) as f32;
 
     // 주사위의 생성시 회전 값
     let rand_dice_rot_x = rng.gen_range(0.0..=2. * PI) as f32;
@@ -152,7 +152,7 @@ pub fn gen_dice(
 pub fn impulse_dice(ext_impulse: Mut<'_, ExternalImpulse>) {
     let mut rng = rand::thread_rng();
     let random_impulse_x = rng.gen_range(-100..=100) as f32;
-    let random_impulse_y = rng.gen_range(1000..=1300) as f32;
+    let random_impulse_y = rng.gen_range(800..=1100) as f32;
     let random_impulse_z = rng.gen_range(-100..=100) as f32;
     let random_torque_impulse_x = rng.gen_range(-1500..=1500) as f32;
     let random_torque_impulse_y = rng.gen_range(-1500..=1500) as f32;
@@ -201,11 +201,33 @@ fn impulse_dice_common(
     torque_impulse_y: f32,
     torque_impulse_z: f32,
 ) {
-    debug!(
+    info!(
         "random_impulse_x: {} random_impulse_y: {} random_impulse_z: {}
         random_number_x: {} random_number_y: {} random_number_z: {}",
         impulse_x, impulse_y, impulse_z, torque_impulse_x, torque_impulse_y, torque_impulse_z
     );
+    let impulse_x = if impulse_x > 900. {
+        900.
+    } else if impulse_x < -900. {
+        -900.
+    } else {
+        impulse_x
+    };
+    let impulse_y = if impulse_y > 900. {
+        900.
+    } else if impulse_y < -900. {
+        -900.
+    } else {
+        impulse_y
+    };
+    let impulse_z = if impulse_z > 900. {
+        900.
+    } else if impulse_z < -900. {
+        -900.
+    } else {
+        impulse_z
+    };
+
     ext_impulse.impulse = Vec3::new(impulse_x, impulse_y, impulse_z);
     ext_impulse.torque_impulse = Vec3::new(torque_impulse_x, torque_impulse_y, torque_impulse_z);
 }

@@ -32,17 +32,17 @@ impl Plugin for WallPlugin {
 fn gen_walls(mut commands: Commands,) {
     // botoom wall
     commands
-    .spawn((Collider::cuboid(400.0, 0.5, 400.0), Wall { wall_type: WallType::Bottom }))
+    .spawn((Collider::cuboid(400.0, 1.5, 400.0), Wall { wall_type: WallType::Bottom }))
     .insert(TransformBundle::from(Transform::from_xyz(0.0, 0.0, 0.0)));
 
     // top wall
     commands
-    .spawn((Collider::cuboid(400.0, 0.5, 400.0), Wall { wall_type: WallType::Top }))
+    .spawn((Collider::cuboid(400.0, 1.5, 400.0), Wall { wall_type: WallType::Top }))
     .insert(TransformBundle::from(Transform::from_xyz(0.0, 30.0, 0.0)));
 
     // right wall
     commands
-    .spawn((Collider::cuboid(15.0, 0.5, 30.0), Wall { wall_type: WallType::Right }))
+    .spawn((Collider::cuboid(400.0, 1.5, 400.0), Wall { wall_type: WallType::Right }))
     .insert(TransformBundle::from(Transform {
         translation: Vec3::new(17.8, 15., 0.),
         scale: Vec3::new(1., 1., 1.),
@@ -51,7 +51,7 @@ fn gen_walls(mut commands: Commands,) {
 
     // left wall
     commands
-    .spawn((Collider::cuboid(15.0, 0.5, 30.0), Wall { wall_type: WallType::Left }))
+    .spawn((Collider::cuboid(400.0, 1.5, 400.0), Wall { wall_type: WallType::Left }))
     .insert(TransformBundle::from(Transform {
         translation: Vec3::new(-17.8, 15., 0.),
         scale: Vec3::new(1., 1., 1.),
@@ -60,7 +60,7 @@ fn gen_walls(mut commands: Commands,) {
 
     // back wall
     commands
-    .spawn((Collider::cuboid(300.0, 0.5, 15.0), Wall { wall_type: WallType::Back }))
+    .spawn((Collider::cuboid(300.0, 1.5, 15.0), Wall { wall_type: WallType::Back }))
     .insert(TransformBundle::from(Transform {
         translation: Vec3::new(0., 15., -30.),
         scale: Vec3::new(1., 1., 1.),
@@ -69,7 +69,7 @@ fn gen_walls(mut commands: Commands,) {
 
     // front wall
     commands
-    .spawn((Collider::cuboid(300.0, 0.5, 15.0), Wall { wall_type: WallType::Front }))
+    .spawn((Collider::cuboid(400.0, 1.5, 400.0), Wall { wall_type: WallType::Front }))
     .insert(TransformBundle::from(Transform {
         translation: Vec3::new(0., 15., 30.),
         scale: Vec3::new(1., 1., 1.),

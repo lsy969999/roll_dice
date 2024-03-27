@@ -20,8 +20,9 @@ pub fn create_roll_dice_app() -> App {
         })
         .build();
 
-    /// release 시점에는 Log, Diagnostics 플러그인을 해제, 메모리증가율때문
+    
     #[cfg(not(debug_assertions))]
+    // release 시점에는 Log, Diagnostics 플러그인을 해제, 메모리증가율때문
     let mut default_plugins = DefaultPlugins
         .build()
         .disable::<LogPlugin>()

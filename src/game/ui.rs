@@ -378,7 +378,7 @@ fn button_system(
     for (btn, interaction, mut bg, children) in & mut btn_query {
         match btn.button_type {
             GameButtonType::Add => {
-                if q_dices.iter().count() < 50 {
+                if q_dices.iter().count() < 30 {
                     match *interaction {
                         Interaction::Pressed => {
                             bg.0 = Color::YELLOW;
