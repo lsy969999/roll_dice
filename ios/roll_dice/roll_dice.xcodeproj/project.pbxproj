@@ -12,13 +12,12 @@
 		3D92736B2BAD307400F8A5AE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D92736A2BAD307400F8A5AE /* ViewController.swift */; };
 		3D92736E2BAD307500F8A5AE /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 3D92736D2BAD307500F8A5AE /* Base */; };
 		3D9273702BAD307600F8A5AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D92736F2BAD307600F8A5AE /* Assets.xcassets */; };
-		3D9273732BAD307600F8A5AE /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 3D9273722BAD307600F8A5AE /* Base */; };
 		3D92737D2BAD3FF500F8A5AE /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D92737C2BAD3FF500F8A5AE /* MetalView.swift */; };
 		3D9273822BAD564800F8A5AE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D9273812BAD564800F8A5AE /* AudioToolbox.framework */; };
-		3D9273A32BAD621300F8A5AE /* libs in Resources */ = {isa = PBXBuildFile; fileRef = 3D9273A22BAD621300F8A5AE /* libs */; };
 		3D9273A82BAD649800F8A5AE /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 3D9273A72BAD649800F8A5AE /* assets */; };
 		3DA7F1D32BB037A2000C3239 /* ViewController+CoreMotion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA7F1D22BB037A2000C3239 /* ViewController+CoreMotion.swift */; };
-		3DA7F1D62BB03B36000C3239 /* libroll_dice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DA7F1D52BB03B26000C3239 /* libroll_dice.a */; };
+		3DC8D1BE2BB3B091000CD872 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DC8D1BD2BB3B091000CD872 /* Launch Screen.storyboard */; };
+		3DC8D1C02BB3B389000CD872 /* libroll_dice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DC8D1BF2BB3B389000CD872 /* libroll_dice.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,7 +27,6 @@
 		3D92736A2BAD307400F8A5AE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		3D92736D2BAD307500F8A5AE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3D92736F2BAD307600F8A5AE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		3D9273722BAD307600F8A5AE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3D9273742BAD307600F8A5AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D92737A2BAD3F1D00F8A5AE /* roll_dice-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "roll_dice-Bridging-Header.h"; sourceTree = "<group>"; };
 		3D92737B2BAD3FDE00F8A5AE /* libroll_dice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libroll_dice.h; sourceTree = "<group>"; };
@@ -37,7 +35,8 @@
 		3D9273A22BAD621300F8A5AE /* libs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = libs; sourceTree = "<group>"; };
 		3D9273A72BAD649800F8A5AE /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = ../../assets; sourceTree = "<group>"; };
 		3DA7F1D22BB037A2000C3239 /* ViewController+CoreMotion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+CoreMotion.swift"; sourceTree = "<group>"; };
-		3DA7F1D52BB03B26000C3239 /* libroll_dice.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libroll_dice.a; path = libs/release/libroll_dice.a; sourceTree = "<group>"; };
+		3DC8D1BD2BB3B091000CD872 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		3DC8D1BF2BB3B389000CD872 /* libroll_dice.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libroll_dice.a; path = libs/release/libroll_dice.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,8 +44,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3DC8D1C02BB3B389000CD872 /* libroll_dice.a in Frameworks */,
 				3D9273822BAD564800F8A5AE /* AudioToolbox.framework in Frameworks */,
-				3DA7F1D62BB03B36000C3239 /* libroll_dice.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,8 +82,8 @@
 				3DA7F1D22BB037A2000C3239 /* ViewController+CoreMotion.swift */,
 				3D92737C2BAD3FF500F8A5AE /* MetalView.swift */,
 				3D92736C2BAD307500F8A5AE /* Main.storyboard */,
+				3DC8D1BD2BB3B091000CD872 /* Launch Screen.storyboard */,
 				3D92736F2BAD307600F8A5AE /* Assets.xcassets */,
-				3D9273712BAD307600F8A5AE /* LaunchScreen.storyboard */,
 				3D9273742BAD307600F8A5AE /* Info.plist */,
 			);
 			path = roll_dice;
@@ -93,7 +92,7 @@
 		3D9273802BAD564800F8A5AE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				3DA7F1D52BB03B26000C3239 /* libroll_dice.a */,
+				3DC8D1BF2BB3B389000CD872 /* libroll_dice.a */,
 				3D9273812BAD564800F8A5AE /* AudioToolbox.framework */,
 			);
 			name = Frameworks;
@@ -159,8 +158,7 @@
 			files = (
 				3D9273A82BAD649800F8A5AE /* assets in Resources */,
 				3D9273702BAD307600F8A5AE /* Assets.xcassets in Resources */,
-				3D9273732BAD307600F8A5AE /* Base in Resources */,
-				3D9273A32BAD621300F8A5AE /* libs in Resources */,
+				3DC8D1BE2BB3B091000CD872 /* Launch Screen.storyboard in Resources */,
 				3D92736E2BAD307500F8A5AE /* Base in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -189,14 +187,6 @@
 				3D92736D2BAD307500F8A5AE /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		3D9273712BAD307600F8A5AE /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3D9273722BAD307600F8A5AE /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -334,10 +324,10 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Roll Dice";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -358,7 +348,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "roll_dice/roll_dice-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -375,10 +365,10 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Roll Dice";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -398,7 +388,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "roll_dice/roll_dice-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
