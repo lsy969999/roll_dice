@@ -1,5 +1,6 @@
 use crate::android_asset_io::AndroidAssetManager;
 use crate::app_view::android::{ AndroidViewObj, AppView };
+use crate::game::dice::AccelerometerEvent;
 use android_logger::Config;
 use bevy::input::ButtonState;
 use bevy::prelude::*;
@@ -79,28 +80,28 @@ pub fn release_bevy_app(_envs: *mut JNIEnv, _: jobject, obj: jlong) {
 #[no_mangle]
 #[jni_fn("xyz.lsy969999.roll_dice.RustBridge")]
 pub fn touch_started(_envs: *mut JNIEnv, _: jobject, obj: jlong, x: f32, y: f32) {
-    log::info!("touch_started x: {}, y: {}", x, y );
+    // log::info!("touch_started x: {}, y: {}", x, y );
     touched(obj, TouchPhase::Started, Vec2::new(x, y));
 }
 
 #[no_mangle]
 #[jni_fn("xyz.lsy969999.roll_dice.RustBridge")]
 pub fn touch_moved(_envs: *mut JNIEnv, _: jobject, obj: jlong, x: f32, y: f32) {
-    log::info!("touch_moved x: {}, y: {}", x, y );
+    // log::info!("touch_moved x: {}, y: {}", x, y );
     touched(obj, TouchPhase::Moved, Vec2::new(x, y));
 }
 
 #[no_mangle]
 #[jni_fn("xyz.lsy969999.roll_dice.RustBridge")]
 pub fn touch_ended(_envs: *mut JNIEnv, _: jobject, obj: jlong, x: f32, y: f32) {
-    log::info!("touch_ended x: {}, y: {}", x, y );
+    // log::info!("touch_ended x: {}, y: {}", x, y );
     touched(obj, TouchPhase::Ended, Vec2::new(x, y));
 }
 
 #[no_mangle]
 #[jni_fn("xyz.lsy969999.roll_dice.RustBridge")]
 pub fn touch_cancelled(_envs: *mut JNIEnv, _: jobject, obj: jlong, x: f32, y: f32) {
-    log::info!("touch_cancelled x: {}, y: {}", x, y );
+    // log::info!("touch_cancelled x: {}, y: {}", x, y );
     touched(obj, TouchPhase::Canceled, Vec2::new(x, y));
 }
 
@@ -129,4 +130,19 @@ fn touched(obj: jlong, phase: TouchPhase, position: Vec2) {
     };
     app.world.cell().send_event(touch);
     
+}
+
+#[no_mangle]
+#[jni_fn("xyz.lsy969999.roll_dice.RustBridge")]
+pub fn device_accelerometer(_envs: *mut JNIEnv, _: jobject, obj: jlong, x: f32, y: f32, z: f32) {
+    // info!("device device_accelerometer! x: {}, y: {}, z: {}", x, y, z);
+    let app = unsafe {
+        &mut *(obj as *mut App)
+    };
+    let acc = AccelerometerEvent {
+        x,
+        y,
+        z,
+    };
+    app.world.cell().send_event(acc);
 }

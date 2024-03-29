@@ -11,32 +11,39 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
+import kotlin.math.absoluteValue
 
 class BevySurfaceView: SurfaceView, SurfaceHolder.Callback2 {
     private var rustBridge: RustBridge = RustBridge()
     private var bevy_app: Long = Long.MAX_VALUE
-    private var idx: Int = 0
     private var sensorManager: SensorManager? = null
     private var mSensor: Sensor? = null
     private var sensorValues: FloatArray = FloatArray(3)
-    private var inits = false
+    private var sType = Sensor.TYPE_LINEAR_ACCELERATION
     val sensorEventListener = object : SensorEventListener {
         override fun onSensorChanged(event: SensorEvent?) {
-            if (event?.sensor?.type == Sensor.TYPE_LINEAR_ACCELERATION) {
+            if (event?.sensor?.type == sType) {
                 sensorValues = event.values
-//                Log.d("TAG", "onSensorChanged: x: ${event.values[0]} y: ${event.values[1]} z: ${event.values[2]}")
+                if (
+                    event.values[0].absoluteValue > 3.0
+                    || event.values[1].absoluteValue > 3.0
+                    || event.values[2].absoluteValue > 3.0
+                ) {
+//                    Log.d("TAG", "onSensorChanged: x: ${event.values[0]} y: ${event.values[1]} z: ${event.values[2]}")
+                }
             }
         }
 
         override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-            if (sensor?.type == Sensor.TYPE_LINEAR_ACCELERATION) {
+            if (sensor?.type == sType) {
                 Log.d("TAG", "accuracy: accuracy: ${accuracy}")
             }
         }
     }
+
     constructor(context: Context) :super(context) {
         sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        mSensor = sensorManager?.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION)
+        mSensor = sensorManager?.getDefaultSensor(sType)
         Log.d("TAG", "constructor")
     }
     constructor(context: Context, attrs: AttributeSet): super(context, attrs) {
@@ -50,6 +57,7 @@ class BevySurfaceView: SurfaceView, SurfaceHolder.Callback2 {
         holder.addCallback(this)
         rustBridge.init_ndk_context(this.context)
     }
+
     override fun surfaceCreated(holder: SurfaceHolder) {
         Log.d("TAG", "surfaceCreated bevy_app: ${bevy_app}")
         holder.let { h ->
@@ -60,7 +68,7 @@ class BevySurfaceView: SurfaceView, SurfaceHolder.Callback2 {
             setWillNotDraw(false)
 
             mSensor?.also { sensor ->
-                sensorManager?.registerListener(sensorEventListener, sensor, SensorManager.SENSOR_DELAY_GAME)
+                sensorManager?.registerListener(sensorEventListener, sensor, SensorManager.SENSOR_DELAY_UI)
             }
         }
     }
@@ -70,7 +78,6 @@ class BevySurfaceView: SurfaceView, SurfaceHolder.Callback2 {
     }
 
     override fun surfaceDestroyed(holder: SurfaceHolder) {
-
         sensorManager?.unregisterListener(sensorEventListener)
         Log.d("TAG", "surfaceDestroyed: ")
         if (bevy_app != Long.MAX_VALUE) {
@@ -83,19 +90,18 @@ class BevySurfaceView: SurfaceView, SurfaceHolder.Callback2 {
 
     }
 
-    private var time = 0;
     override fun draw(canvas: Canvas) {
-//        Log.d("TAG,", "draw: ${time}")
-//        time++
         super.draw(canvas)
-//        if (time > 500 ) {
-//            return
-//        }
         if (bevy_app == Long.MAX_VALUE) {
             return
         }
-//        rustBridge.device_motion(bevy_app, sensorValues[0], sensorValues[1], sensorValues[2])
+        val weight = 0.1F  * -1;
         rustBridge.enter_frame(bevy_app)
+        val y = sensorValues[1] * weight
+        if (y > 1.5) {
+            // 너무 민감 해서 y만 값을 주기로..
+            rustBridge.device_accelerometer(bevy_app, 0F, sensorValues[1] * weight  , 0F)
+        }
         invalidate()
     }
 
@@ -104,25 +110,25 @@ class BevySurfaceView: SurfaceView, SurfaceHolder.Callback2 {
         if (event?.action == MotionEvent.ACTION_DOWN){
             val x = event.x / scaleFactor
             val y = event.y / scaleFactor
-            Log.d("BevySurfaceView", "onTouchEvent ACTION_DOWN: x: ${x} y: ${y} scaleFactor: ${scaleFactor}")
+//            Log.d("BevySurfaceView", "onTouchEvent ACTION_DOWN: x: ${x} y: ${y} scaleFactor: ${scaleFactor}")
             rustBridge.touch_started(bevy_app, x, y)
         }
         else if (event?.action == MotionEvent.ACTION_MOVE){
             val x = event.x / scaleFactor
             val y = event.y / scaleFactor
-            Log.d("BevySurfaceView", "onTouchEvent ACTION_MOVE: x: ${x} y: ${y} scaleFactor: ${scaleFactor}")
+//            Log.d("BevySurfaceView", "onTouchEvent ACTION_MOVE: x: ${x} y: ${y} scaleFactor: ${scaleFactor}")
             rustBridge.touch_moved(bevy_app, x, y)
         }
         else if (event?.action == MotionEvent.ACTION_UP){
             val x = event.x / scaleFactor
             val y = event.y / scaleFactor
-            Log.d("BevySurfaceView", "onTouchEvent ACTION_UP: x: ${x} y: ${y} scaleFactor: ${scaleFactor}")
+//            Log.d("BevySurfaceView", "onTouchEvent ACTION_UP: x: ${x} y: ${y} scaleFactor: ${scaleFactor}")
             rustBridge.touch_ended(bevy_app, x, y)
         }
         else if (event?.action == MotionEvent.ACTION_CANCEL){
             val x = event.x / scaleFactor
             val y = event.y / scaleFactor
-            Log.d("BevySurfaceView", "onTouchEvent ACTION_CANCEL: x: ${x} y: ${y} scaleFactor: ${scaleFactor}")
+//            Log.d("BevySurfaceView", "onTouchEvent ACTION_CANCEL: x: ${x} y: ${y} scaleFactor: ${scaleFactor}")
             rustBridge.touch_cancelled(bevy_app, x, y)
         }
         return true

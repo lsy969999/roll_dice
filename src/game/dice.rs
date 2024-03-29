@@ -176,9 +176,9 @@ pub fn impulse_dice_accelerometer(
     impulse_z: f32,
 ) {
     let mut rng = rand::thread_rng();
-    let random_torque_impulse_x = rng.gen_range(-100..=100) as f32;
-    let random_torque_impulse_y = rng.gen_range(-100..=100) as f32;
-    let random_torque_impulse_z = rng.gen_range(-100..=100) as f32;
+    let random_torque_impulse_x = rng.gen_range(-800..=800) as f32;
+    let random_torque_impulse_y = rng.gen_range(-800..=800) as f32;
+    let random_torque_impulse_z = rng.gen_range(-800..=800) as f32;
     impulse_dice_common(
         ext_impulse,
         impulse_x,
