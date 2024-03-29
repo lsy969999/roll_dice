@@ -1,5 +1,6 @@
 use bevy::{utils::HashMap, ecs::entity::Entity};
 
+#[cfg(target_os = "ios")]
 pub use super::ios::*;
 
 #[cfg(target_os = "android")]

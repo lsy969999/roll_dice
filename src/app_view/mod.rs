@@ -5,7 +5,11 @@ use bevy::log::info;
 use app_views::*;
 
 pub mod app_views;
+
+#[cfg(target_os = "ios")]
 pub mod ios;
+#[cfg(target_os = "android")]
+pub mod android;
 
 #[derive(Eq, Hash, PartialEq, Debug, Copy, Clone)]
 pub(crate) struct WindowId(Uuid);
@@ -33,6 +37,11 @@ impl Plugin for AppViewPlugin  {
 pub fn create_bevy_window(app: &mut App) {
   #[cfg(target_os = "ios")]
   let view_obj = app.world.remove_non_send_resource::<IOSViewObj>().unwrap();
+  #[cfg(target_os = "android")]
+  let view_obj = app
+    .world
+    .remove_non_send_resource::<AndroidViewObj>()
+    .unwrap();
 
   let mut create_window_system_state: SystemState<(
     Commands,
